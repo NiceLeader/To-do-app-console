@@ -10,6 +10,8 @@ public class JDBC {
     protected static  String DATABASE_PASSWORD = "vG3TwK9hpD";
     protected static  String SELECT_QUERY = "SELECT * FROM registration WHERE email_id = ? and password = ?";
     protected String name;
+    protected static String salt = BCrypt.gensalt();
+
 
 
     public boolean validate(String emailId, String password){
@@ -47,13 +49,14 @@ public class JDBC {
         pass.setString(1, login);
         pass.execute();
         statement.setString(1, login);
-        if (BCrypt.checkpw(password, sqlPswd)) {
-            statement.setString(2, password);
-           String sqlName = "SELECT name FROM user WHERE login=?;";
-           PreparedStatement name = connection.prepareStatement(sqlName);
-           name.setString(1,login);
-            statement.executeUpdate();
-        } System.out.println("błędne hasło");
+
+//        if (BCrypt.checkpw(password, sqlPswd)) {
+//            statement.setString(2, password);
+//           String sqlName = "SELECT name FROM user WHERE login=?;";
+//           PreparedStatement name = connection.prepareStatement(sqlName);
+//           name.setString(1,login);
+//            statement.executeUpdate();
+//        } System.out.println("błędne hasło");
         return true;
     }
 
@@ -145,7 +148,6 @@ public class JDBC {
     }
 
     private static ResultSet createUser(Connection connection) throws SQLException {
-        String salt = BCrypt.gensalt();
         Scanner scanner = new Scanner(System.in);
         System.out.println("podaj imię");
         String name = scanner.nextLine();
@@ -155,7 +157,7 @@ public class JDBC {
         String login = scanner.nextLine();
         System.out.println("podaj hasło");
         String password = scanner.nextLine();
-        String hashed = BCrypt.hashpw(password, salt);
+//        String hashed = BCrypt.hashpw(password, salt);
         System.out.println("podaj email");
         String email = scanner.nextLine();
         String sqlAddTask = """
@@ -252,7 +254,7 @@ public class JDBC {
                 break;
             case "2":
                  createUser(connection);
-                break;
+                 break;
             default:
                 System.out.println("wybierz akcję");
         showAllColumnsFromResultSet(searchAllUsers(connection));
