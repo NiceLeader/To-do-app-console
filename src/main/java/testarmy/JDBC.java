@@ -41,9 +41,9 @@ public class JDBC {
 
     public static boolean loginUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj login");
+        System.out.println("Podaj login");
         String login = scanner.nextLine();
-        System.out.println("podaj hasło");
+        System.out.println("Podaj hasło");
         String password = scanner.nextLine();
         String sqlUser = "SELECT id,name,password FROM user WHERE login=? AND password=?;";
         PreparedStatement statement = connection.prepareStatement(sqlUser);
@@ -121,13 +121,13 @@ public class JDBC {
                 (?,?,?,?)
                     """;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj nazwę zadania");
+        System.out.println("Podaj nazwę zadania");
         String title = scanner.nextLine();
-        System.out.println("podaj opis zadania");
+        System.out.println("Podaj opis zadania");
         String description = scanner.nextLine();
-        System.out.println("podaj priorytet zadania (low, medium, lub high)");
+        System.out.println("Podaj priorytet zadania (low, medium, lub high)");
         String priority = scanner.nextLine();
-        System.out.println("podaj numer użytkownika do którego należy zadanie");
+        System.out.println("Podaj numer użytkownika do którego należy zadanie");
         String userId = scanner.nextLine();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlAddTask, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, title);
@@ -136,7 +136,7 @@ public class JDBC {
         preparedStatement.setInt(4, Integer.parseInt(userId));
         int i = preparedStatement.executeUpdate();
         if (i > 0) {
-            System.out.println("dodano zadanie");
+            System.out.println("Dodano zadanie");
         } else {
             System.out.println("Błąd! Nie dodano zadania!");
         }
@@ -144,9 +144,9 @@ public class JDBC {
 
     private static void updateStatusOfTask(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj numer zadania");
+        System.out.println("Podaj numer zadania");
         String id = scanner.nextLine();
-        System.out.println("wybierz status (1 - zadanie wykonane/0 - zadanie nie wykonane)");
+        System.out.println("Wybierz status (1 - zadanie wykonane/0 - zadanie nie wykonane)");
         String status = scanner.nextLine();
         String sqlUpdate = "UPDATE task SET done = ? WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate);
@@ -154,7 +154,7 @@ public class JDBC {
         preparedStatement.setInt(2, Integer.parseInt(id));
         int i = preparedStatement.executeUpdate();
         if (i > 0) {
-            System.out.println("zaktualizowano status zadania");
+            System.out.println("Zaktualizowano status zadania");
         } else {
             System.out.println("Błąd! Nie zaktualizowano statusu zadania!");
         }
@@ -170,16 +170,16 @@ public class JDBC {
 
     private static ResultSet createUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj imię");
+        System.out.println("Podaj imię");
         String name = scanner.nextLine();
-        System.out.println("podaj nazwisko");
+        System.out.println("Podaj nazwisko");
         String surname = scanner.nextLine();
-        System.out.println("podaj login");
+        System.out.println("Podaj login");
         String login = scanner.nextLine();
-        System.out.println("podaj hasło");
+        System.out.println("Podaj hasło");
         String password = scanner.nextLine();
 //        String hashed = BCrypt.hashpw(password, salt);
-        System.out.println("podaj email");
+        System.out.println("Podaj email");
         String email = scanner.nextLine();
         String sqlAddTask = """
                  INSERT INTO user(name,surname,login,password,email) VALUES
@@ -197,7 +197,7 @@ public class JDBC {
         //     statement.execute();
         boolean i = statement.execute();
         if (i == true) {
-            System.out.println("dodano użytkownika");
+            System.out.println("Dodano użytkownika");
         } else {
             System.out.println("Błąd! Nie dodano użytkownika!");
         }
@@ -207,14 +207,14 @@ public class JDBC {
 
     private static void deleteTask(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("podaj id zadania do skasowania");
+        System.out.println("Podaj id zadania do skasowania");
         String id = scanner.nextLine();
         String sqlDelete = "DELETE FROM task WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete);
         preparedStatement.setInt(1, Integer.parseInt(id));
         int i = preparedStatement.executeUpdate();
         if (i > 0) {
-            System.out.println("usunięto zadanie");
+            System.out.println("Usunięto zadanie");
         } else {
             System.out.println("Błąd! Nie usunięto zadania!");
         }
@@ -278,28 +278,28 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
-        System.out.println("wybierz akcję: 1 - logowanie, 2 - dodaj użytkownika");
+        System.out.println("Wybierz akcję:\n 1 - Logowanie,\n 2 - Dodaj użytkownika");
         Scanner scannerLogin = new Scanner(System.in);
         String login = scannerLogin.nextLine();
 
         if (login.equals("1") || login.equals("2")) {
             switch (login) {
                 case "1":
-                    System.out.println("logowanie");
+                    System.out.println("Logowanie");
                     loginUser(connection);
                     break;
                 case "2":
                     createUser(connection);
                     break;
                 default:
-                    System.out.println("wybierz akcję: 1 - logowanie, 2 - dodaj użytkownika");
+                    System.out.println("Wybierz akcję:\n 1 - Logowanie,\n 2 - Dodaj użytkownika");
             }
         } else {
             System.out.println("test");
         }
 //showAllColumnsFromResultSet(searchAllUsers(connection));
         do {
-            System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
+            System.out.println("Wybierz akcję: \n 1 - Wyszukaj zadanie,\n 2 - Wyszukaj użytkownika,\n 3 - Zmień status zadania,\n 4 - Usuń zadanie,\n 5 - Dodaj zadanie,\n 6 - Zamknij program");
             Scanner scannerAction = new Scanner(System.in);
             String action = scannerAction.nextLine();
             if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")|| action.equals("6")) {
@@ -323,7 +323,7 @@ public class JDBC {
                         exit(1);
                         break;
                     default:
-                        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
+                        System.out.println("Wybierz akcję:\n 1 - Wyszukaj zadanie,\n 2 - Wyszukaj użytkownika,\n 3 - Zmień status zadania,\n 4 - Usuń zadanie,\n 5 - Dodaj zadanie,\n 6 - Zamknij program");
                 }
 
 
