@@ -125,7 +125,7 @@ public class JDBC {
         String title = scanner.nextLine();
         System.out.println("podaj opis zadania");
         String description = scanner.nextLine();
-        System.out.println("podaj priorytet zadania (niski, średni, lub wysoki)");
+        System.out.println("podaj priorytet zadania (low, high, lub medium)");
         String priority = scanner.nextLine();
         System.out.println("podaj numer użytkownika do którego należy zadanie");
         String userId = scanner.nextLine();
@@ -134,7 +134,12 @@ public class JDBC {
         preparedStatement.setString(2, description);
         preparedStatement.setString(3, priority);
         preparedStatement.setInt(4, Integer.parseInt(userId));
-        preparedStatement.executeUpdate();
+        int i = preparedStatement.executeUpdate();
+        if (i > 0) {
+            System.out.println("dodano zadanie");
+        } else {
+            System.out.println("Błąd! Nie dodano zadania!");
+        }
     }
 
     private static void updateStatusOfTask(Connection connection) throws SQLException {
@@ -147,7 +152,12 @@ public class JDBC {
         PreparedStatement preparedStatement = connection.prepareStatement(sqlUpdate);
         preparedStatement.setString(1, status);
         preparedStatement.setInt(2, Integer.parseInt(id));
-        preparedStatement.executeUpdate();
+        int i = preparedStatement.executeUpdate();
+        if (i > 0) {
+            System.out.println("zaktualizowano status zadania");
+        } else {
+            System.out.println("Błąd! Nie zaktualizowano statusu zadania!");
+        }
     }
 
     private static void createDatabase(Connection connection) throws SQLException {
@@ -202,7 +212,12 @@ public class JDBC {
         String sqlDelete = "DELETE FROM task WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete);
         preparedStatement.setInt(1, Integer.parseInt(id));
-        preparedStatement.executeUpdate();
+        int i = preparedStatement.executeUpdate();
+        if (i > 0) {
+            System.out.println("usunięto zadanie");
+        } else {
+            System.out.println("Błąd! Nie usunięto zadania!");
+        }
     }
 
     private static ResultSet searchUser(Connection connection) throws SQLException {
