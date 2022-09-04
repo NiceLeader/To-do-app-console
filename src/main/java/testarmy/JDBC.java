@@ -50,16 +50,22 @@ public class JDBC {
         String sqlPswd = "SELECT password FROM user WHERE login=?;";
         PreparedStatement pass = connection.prepareStatement(sqlPswd);
         pass.setString(1, login);
-        pass.execute();
+        //pass.execute();
         statement.setString(1, login);
-        if (BCrypt.checkpw(password, sqlPswd)) {
-            statement.setString(2, password);
-            String sqlName = "SELECT name FROM user WHERE login=?;";
-            PreparedStatement name = connection.prepareStatement(sqlName);
-            name.setString(1, login);
-            statement.executeUpdate();
+        //        if (BCrypt.checkpw(password, sqlPswd)) {
+//            statement.setString(2, password);
+//           String sqlName = "SELECT name FROM user WHERE login=?;";
+//           PreparedStatement name = connection.prepareStatement(sqlName);
+//           name.setString(1,login);
+//            statement.executeUpdate();
+//        }else {
+//        System.out.println("błędne hasło");}
+        boolean i = pass.execute();
+        if (i == true) {
+            System.out.println("Zalogowałeś się!");
+        } else {
+            System.out.println("Nie zalogowałeś się!");
         }
-        System.out.println("błędne hasło");
         return true;
     }
 
@@ -278,10 +284,10 @@ public class JDBC {
         }
 //showAllColumnsFromResultSet(searchAllUsers(connection));
         do {
-            System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - zamknij program");
+            System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
             Scanner scannerAction = new Scanner(System.in);
             String action = scannerAction.nextLine();
-            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")) {
+            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")|| action.equals("6")) {
                 switch (action) {
                     case "1":
                         showAllColumnsFromResultSet(searchTask(connection));
@@ -296,10 +302,13 @@ public class JDBC {
                         deleteTask(connection);
                         break;
                     case "5":
+                        addTask(connection);
+                        break;
+                    case "6":
                         exit(1);
                         break;
                     default:
-                        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - zamknij program");
+                        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
                 }
 
 
