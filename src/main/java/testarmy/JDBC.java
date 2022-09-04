@@ -43,9 +43,9 @@ public class JDBC {
         String sqlUser = "SELECT id,name,password FROM user WHERE login=? AND password=?;";
         PreparedStatement statement = connection.prepareStatement(sqlUser);
         String sqlPswd = "SELECT password FROM user WHERE login=?;";
-        PreparedStatement pswd = connection.prepareStatement(sqlPswd);
-        pswd.setString(1, login);
-        pswd.executeUpdate();
+        PreparedStatement pass = connection.prepareStatement(sqlPswd);
+        pass.setString(1, login);
+        pass.execute();
         statement.setString(1, login);
         if (BCrypt.checkpw(password, sqlPswd)) {
             statement.setString(2, password);
@@ -247,7 +247,7 @@ public class JDBC {
         switch (login) {
             case "1":
                 System.out.println("logowanie");
-
+                loginUser(connection);
                 break;
             case "2":
                  createUser(connection);
