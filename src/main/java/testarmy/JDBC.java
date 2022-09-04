@@ -226,7 +226,11 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
-        System.out.println("obecna baza danych: "+connection.getCatalog());
+        System.out.println("wybierz akcję");
+        Scanner scanner = new Scanner(System.in);
+        String action = scanner.nextLine();
+        showAllColumnsFromResultSet(searchTask(connection));
+        //addTask(connection);
 
 
     }
