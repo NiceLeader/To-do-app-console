@@ -50,16 +50,22 @@ public class JDBC {
         String sqlPswd = "SELECT password FROM user WHERE login=?;";
         PreparedStatement pass = connection.prepareStatement(sqlPswd);
         pass.setString(1, login);
-        pass.execute();
+        //pass.execute();
         statement.setString(1, login);
-        if (BCrypt.checkpw(password, sqlPswd)) {
-            statement.setString(2, password);
-            String sqlName = "SELECT name FROM user WHERE login=?;";
-            PreparedStatement name = connection.prepareStatement(sqlName);
-            name.setString(1, login);
-            statement.executeUpdate();
+        //        if (BCrypt.checkpw(password, sqlPswd)) {
+//            statement.setString(2, password);
+//           String sqlName = "SELECT name FROM user WHERE login=?;";
+//           PreparedStatement name = connection.prepareStatement(sqlName);
+//           name.setString(1,login);
+//            statement.executeUpdate();
+//        }else {
+//        System.out.println("błędne hasło");}
+        boolean i = pass.execute();
+        if (i == true) {
+            System.out.println("Zalogowałeś się!");
+        } else {
+            System.out.println("Nie zalogowałeś się!");
         }
-        System.out.println("błędne hasło");
         return true;
     }
 
@@ -87,7 +93,7 @@ public class JDBC {
                         description TEXT NOT NULL,
                         done BOOLEAN NOT NULL DEFAULT FALSE,
                         created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        priority ENUM ('wysoki', 'średni', 'niski') NOT NULL DEFAULT 'niski',
+                        priority ENUM ('low', 'medium', 'high') NOT NULL DEFAULT 'niski',
                         user_id INT NOT NULL,
                         FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE);
                                              """;
@@ -119,7 +125,7 @@ public class JDBC {
         String title = scanner.nextLine();
         System.out.println("podaj opis zadania");
         String description = scanner.nextLine();
-        System.out.println("podaj priorytet zadania (niski, średni, lub wysoki)");
+        System.out.println("podaj priorytet zadania (low, medium, lub high)");
         String priority = scanner.nextLine();
         System.out.println("podaj numer użytkownika do którego należy zadanie");
         String userId = scanner.nextLine();
@@ -142,6 +148,12 @@ public class JDBC {
         preparedStatement.setString(1, status);
         preparedStatement.setInt(2, Integer.parseInt(id));
         preparedStatement.executeUpdate();
+        int i = preparedStatement.executeUpdate();
+        if (i > 0) {
+            System.out.println("zaktualizowano status zadania");
+        } else {
+            System.out.println("Błąd! Nie zaktualizowano statusu zadania!");
+        }
     }
 
     private static void createDatabase(Connection connection) throws SQLException {
@@ -278,10 +290,10 @@ public class JDBC {
         }
 //showAllColumnsFromResultSet(searchAllUsers(connection));
         do {
-            System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - zamknij program");
+            System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
             Scanner scannerAction = new Scanner(System.in);
             String action = scannerAction.nextLine();
-            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")) {
+            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5") || action.equals("6")) {
                 switch (action) {
                     case "1":
                         showAllColumnsFromResultSet(searchTask(connection));
@@ -296,10 +308,13 @@ public class JDBC {
                         deleteTask(connection);
                         break;
                     case "5":
+                        addTask(connection);
+                        break;
+                    case "6":
                         exit(1);
                         break;
                     default:
-                        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - zamknij program");
+                        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie, 5 - dodaj zadanie, 6 - zamknij program");
                 }
 
 
