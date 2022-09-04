@@ -143,7 +143,7 @@ public class JDBC {
         preparedStatement.execute();
     }
 
-    private static void createUser(Connection connection) throws SQLException {
+    private static ResultSet createUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("podaj imię");
         String name = scanner.nextLine();
@@ -170,8 +170,7 @@ public class JDBC {
         String sqlSearchId = "SELECT id FROM user ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sqlSearchId);
         statement.executeUpdate();
-//        return Integer.parseInt(sqlSearchId);
-
+        return preparedStatement.getResultSet();
 
     }
     private static void deleteTask(Connection connection) throws SQLException {
@@ -226,12 +225,11 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
-        System.out.println("wybierz akcję");
+        System.out.println("obecna baza danych: "+connection.getCatalog());
         Scanner scanner = new Scanner(System.in);
         String action = scanner.nextLine();
-        showAllColumnsFromResultSet(searchTask(connection));
+        showAllColumnsFromResultSet(createUser(connection));
         //addTask(connection);
-
 
     }
 }
