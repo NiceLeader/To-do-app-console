@@ -49,14 +49,13 @@ public class JDBC {
         pass.setString(1, login);
         pass.execute();
         statement.setString(1, login);
-
-//        if (BCrypt.checkpw(password, sqlPswd)) {
-//            statement.setString(2, password);
-//           String sqlName = "SELECT name FROM user WHERE login=?;";
-//           PreparedStatement name = connection.prepareStatement(sqlName);
-//           name.setString(1,login);
-//            statement.executeUpdate();
-//        } System.out.println("błędne hasło");
+        if (BCrypt.checkpw(password, sqlPswd)) {
+            statement.setString(2, password);
+           String sqlName = "SELECT name FROM user WHERE login=?;";
+           PreparedStatement name = connection.prepareStatement(sqlName);
+           name.setString(1,login);
+            statement.executeUpdate();
+        } System.out.println("błędne hasło");
         return true;
     }
 
@@ -173,7 +172,13 @@ public class JDBC {
         preparedStatement.executeUpdate();
         String sqlSearchId = "SELECT id FROM user ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sqlSearchId);
-        statement.execute();
+   //     statement.execute();
+        boolean i = statement.execute();
+        if (i == true) {
+            System.out.println("dodano użytkownika");
+        } else {
+            System.out.println("Błąd! Nie dodano użytkownika!");
+        }
         return preparedStatement.getResultSet();
 
     }
@@ -247,6 +252,7 @@ public class JDBC {
         System.out.println("wybierz akcję: 1 - logowanie, 2 - dodaj użytkownika");
         Scanner scannerLogin = new Scanner(System.in);
         String login = scannerLogin.nextLine();
+        if (login.equals("1") || login.equals("2")){
         switch (login) {
             case "1":
                 System.out.println("logowanie");
@@ -254,13 +260,19 @@ public class JDBC {
                 break;
             case "2":
                  createUser(connection);
-                 break;
+                break;
             default:
-                System.out.println("wybierz akcję");
-        showAllColumnsFromResultSet(searchAllUsers(connection));
+                System.out.println("wybierz akcję: 1 - logowanie, 2 - dodaj użytkownika");
+        }
+        }else {
+            System.out.println("test");
+        }
+
+        //showAllColumnsFromResultSet(searchAllUsers(connection));
         System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie");
         Scanner scannerAction = new Scanner(System.in);
         String action = scannerAction.nextLine();
+        if (action.equals("1") || action.equals("2")||action.equals("3") || action.equals("4")){
         switch (action) {
             case "1":
                 showAllColumnsFromResultSet(searchTask(connection));
@@ -275,11 +287,12 @@ public class JDBC {
                 deleteTask(connection);
                 break;
             default:
-                System.out.println("wybierz akcję");
+                System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie");
+        }
 
 
-
-    }
-}
+    } else {
+            System.out.println("test1");
+        }
 }
 }
