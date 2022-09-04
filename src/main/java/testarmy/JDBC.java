@@ -169,7 +169,13 @@ public class JDBC {
         preparedStatement.executeUpdate();
         String sqlSearchId = "SELECT id FROM user ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sqlSearchId);
-        statement.execute();
+   //     statement.execute();
+        boolean i = statement.execute();
+        if (i == true) {
+            System.out.println("dodano użytkownika");
+        } else {
+            System.out.println("Błąd! Nie dodano użytkownika!");
+        }
         return preparedStatement.getResultSet();
 
     }
@@ -245,7 +251,7 @@ public class JDBC {
         String login = scannerLogin.nextLine();
         switch (login) {
             case "1":
-                System.out.println("logowanie");;
+                System.out.println("logowanie");
                 break;
             case "2":
                 createUser(connection);
