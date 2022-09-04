@@ -191,7 +191,7 @@ public class JDBC {
         PreparedStatement statement = connection.prepareStatement(sqlSearch);
         statement.setInt(1, Integer.parseInt(id));
         ResultSet resultSetSearch = statement.executeQuery();
-        System.out.println("imię, nazwisko, login, hasło, email");
+   //     System.out.println("imię, nazwisko, login, hasło, email");
         return resultSetSearch;
     }
 
@@ -204,6 +204,21 @@ public class JDBC {
         statement.setInt(1, Integer.parseInt(id));
         ResultSet resultSetSearch = statement.executeQuery();
         System.out.println("nazwa, opis, wykonano, priorytet, user id");
+        return resultSetSearch;
+    }
+    static ResultSet searchAllTasks(Connection connection) throws SQLException {
+        String sqlSearch = "SELECT * FROM task";
+        PreparedStatement statement = connection.prepareStatement(sqlSearch);
+        ResultSet resultSetSearch = statement.executeQuery();
+        System.out.println("nazwa, opis, wykonano, priorytet, user id");
+        return resultSetSearch;
+    }
+
+    static ResultSet searchAllUsers(Connection connection) throws SQLException {
+        String sqlSearch = "SELECT * FROM user";
+        PreparedStatement statement = connection.prepareStatement(sqlSearch);
+        ResultSet resultSetSearch = statement.executeQuery();
+       // System.out.println("nazwa, opis, wykonano, priorytet, user id");
         return resultSetSearch;
     }
 
@@ -225,11 +240,29 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
-        System.out.println("obecna baza danych: "+connection.getCatalog());
+        showAllColumnsFromResultSet(searchAllUsers(connection));
+        System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie");
         Scanner scanner = new Scanner(System.in);
         String action = scanner.nextLine();
-        showAllColumnsFromResultSet(createUser(connection));
+        switch (action) {
+            case "1":
+                showAllColumnsFromResultSet(searchTask(connection));
+                break;
+            case "2":
+                showAllColumnsFromResultSet(searchUser(connection));
+                break;
+            case "3":
+                updateStatusOfTask(connection);
+                break;
+            case "4":
+                deleteTask(connection);
+                break;
+            default:
+                System.out.println("wybierz akcję");
+
         //addTask(connection);
 
+
     }
+}
 }
