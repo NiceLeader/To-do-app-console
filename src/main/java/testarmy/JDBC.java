@@ -145,6 +145,7 @@ public class JDBC {
     }
 
     private static ResultSet createUser(Connection connection) throws SQLException {
+        String salt = BCrypt.gensalt();
         Scanner scanner = new Scanner(System.in);
         System.out.println("podaj imię");
         String name = scanner.nextLine();
@@ -154,7 +155,7 @@ public class JDBC {
         String login = scanner.nextLine();
         System.out.println("podaj hasło");
         String password = scanner.nextLine();
-        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        String hashed = BCrypt.hashpw(password, salt);
         System.out.println("podaj email");
         String email = scanner.nextLine();
         String sqlAddTask = """
