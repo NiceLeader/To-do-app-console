@@ -207,7 +207,7 @@ public class JDBC {
         return resultSetSearch;
     }
     static ResultSet searchAllTasks(Connection connection) throws SQLException {
-        String sqlSearch = "SELECT * FROM task";
+        String sqlSearch = "SELECT id, name, description FROM task";
         PreparedStatement statement = connection.prepareStatement(sqlSearch);
         ResultSet resultSetSearch = statement.executeQuery();
         System.out.println("nazwa, opis, wykonano, priorytet, user id");
@@ -215,7 +215,7 @@ public class JDBC {
     }
 
     static ResultSet searchAllUsers(Connection connection) throws SQLException {
-        String sqlSearch = "SELECT * FROM user";
+        String sqlSearch = "SELECT id, name, surname FROM user";
         PreparedStatement statement = connection.prepareStatement(sqlSearch);
         ResultSet resultSetSearch = statement.executeQuery();
        // System.out.println("nazwa, opis, wykonano, priorytet, user id");
