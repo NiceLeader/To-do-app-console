@@ -240,10 +240,22 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
+        System.out.println("wybierz akcję: 1 - logowanie, 2 - dodaj użytkownika");
+        Scanner scannerLogin = new Scanner(System.in);
+        String login = scannerLogin.nextLine();
+        switch (login) {
+            case "1":
+                System.out.println("logowanie");;
+                break;
+            case "2":
+                createUser(connection);
+                break;
+            default:
+                System.out.println("wybierz akcję");
         showAllColumnsFromResultSet(searchAllUsers(connection));
         System.out.println("wybierz akcję: 1 - wyszukaj zadanie, 2 - wyszukaj użytkownika, 3 - zmień status zadania, 4 - usuń zadanie");
-        Scanner scanner = new Scanner(System.in);
-        String action = scanner.nextLine();
+        Scanner scannerAction = new Scanner(System.in);
+        String action = scannerAction.nextLine();
         switch (action) {
             case "1":
                 showAllColumnsFromResultSet(searchTask(connection));
