@@ -34,7 +34,7 @@ public class JDBC {
         }
         return false;
     }
-    public boolean loginUser(Connection connection) throws SQLException {
+    public static boolean loginUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("podaj login");
         String login = scanner.nextLine();
@@ -49,9 +49,9 @@ public class JDBC {
         statement.setString(1, login);
         if (BCrypt.checkpw(password, sqlPswd)) {
             statement.setString(2, password);
-//            String sqlName = "SELECT name FROM user WHERE login=?;";
-//            PreparedStatement name = connection.prepareStatement(sqlName);
-//            name.setString(1,login);
+           String sqlName = "SELECT name FROM user WHERE login=?;";
+           PreparedStatement name = connection.prepareStatement(sqlName);
+           name.setString(1,login);
             statement.executeUpdate();
         } System.out.println("błędne hasło");
         return true;
@@ -123,6 +123,7 @@ public class JDBC {
         preparedStatement.setInt(4, Integer.parseInt(userId));
         preparedStatement.executeUpdate();
     }
+
     private static void updateStatusOfTask(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("podaj numer zadania");
@@ -169,13 +170,7 @@ public class JDBC {
         preparedStatement.executeUpdate();
         String sqlSearchId = "SELECT id FROM user ORDER BY id DESC LIMIT 1;";
         PreparedStatement statement = connection.prepareStatement(sqlSearchId);
-   //     statement.execute();
-        boolean i = statement.execute();
-        if (i == true) {
-            System.out.println("dodano użytkownika");
-        } else {
-            System.out.println("Błąd! Nie dodano użytkownika!");
-        }
+        statement.execute();
         return preparedStatement.getResultSet();
 
     }
@@ -252,9 +247,10 @@ public class JDBC {
         switch (login) {
             case "1":
                 System.out.println("logowanie");
+
                 break;
             case "2":
-                createUser(connection);
+                 createUser(connection);
                 break;
             default:
                 System.out.println("wybierz akcję");
@@ -278,7 +274,6 @@ public class JDBC {
             default:
                 System.out.println("wybierz akcję");
 
-        //addTask(connection);
 
 
     }
