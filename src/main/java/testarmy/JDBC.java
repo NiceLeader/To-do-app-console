@@ -4,10 +4,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.Scanner;
 public class JDBC {
-    static final String DATABASE_URL = "jdbc:mysql://localhost:3306/to_do_app";
-    protected static  String DATABASE_USERNAME = "root";
+    static final String DATABASE_URL = "jdbc:mysql://sql11.freesqldatabase.com/sql11517150";
+    protected static  String DATABASE_USERNAME = "sql11517150";
     protected int returnGeneratedKeys = Statement.RETURN_GENERATED_KEYS;
-    protected static  String DATABASE_PASSWORD = "Grupa03!";
+    protected static  String DATABASE_PASSWORD = "vG3TwK9hpD";
     protected static  String SELECT_QUERY = "SELECT * FROM registration WHERE email_id = ? and password = ?";
     protected String name;
 
