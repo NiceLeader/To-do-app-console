@@ -50,7 +50,7 @@ public class JDBC {
         String sqlPswd = "SELECT password FROM user WHERE login=?;";
         PreparedStatement pass = connection.prepareStatement(sqlPswd);
         pass.setString(1, login);
-        //pass.execute();
+        pass.execute();
         statement.setString(1, login);
         //        if (BCrypt.checkpw(password, sqlPswd)) {
 //            statement.setString(2, password);
@@ -93,7 +93,7 @@ public class JDBC {
                         description TEXT NOT NULL,
                         done BOOLEAN NOT NULL DEFAULT FALSE,
                         created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        priority ENUM ('wysoki', 'średni', 'niski') NOT NULL DEFAULT 'niski',
+                        priority ENUM ('low', 'medium', 'high') NOT NULL DEFAULT 'niski',
                         user_id INT NOT NULL,
                         FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE);
                                              """;
@@ -125,7 +125,7 @@ public class JDBC {
         String title = scanner.nextLine();
         System.out.println("podaj opis zadania");
         String description = scanner.nextLine();
-        System.out.println("podaj priorytet zadania (low, high, lub medium)");
+        System.out.println("podaj priorytet zadania (low, medium, lub high)");
         String priority = scanner.nextLine();
         System.out.println("podaj numer użytkownika do którego należy zadanie");
         String userId = scanner.nextLine();
