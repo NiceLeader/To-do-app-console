@@ -159,7 +159,8 @@ public class JDBC {
             System.out.println("Błąd! Nie zaktualizowano statusu zadania!");
         }
     }
-
+    //int/string
+//if(resultSearch!=null && resultSetSearch.next()){int/string = resultSetSearch.getString(column name)}
     private static void createDatabase(Connection connection) throws SQLException {
         String sqlCreateDatabase = """
                 CREATE DATABASE IF NOT EXISTS to_do_app;
@@ -278,21 +279,23 @@ public class JDBC {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
         connection.setCatalog("sql11517150");
-        System.out.println("Wybierz akcję:\n 1 - Logowanie,\n 2 - Dodaj użytkownika");
+        System.out.println("wybierz akcję:\n 1 - logowanie,\n 2 - dodaj użytkownika,\n 3 - zamknij program");
         Scanner scannerLogin = new Scanner(System.in);
         String login = scannerLogin.nextLine();
-
-        if (login.equals("1") || login.equals("2")) {
+        if (login.equals("1") || login.equals("2") || login.equals("3")) {
             switch (login) {
                 case "1":
-                    System.out.println("Logowanie");
+                    System.out.println("logowanie");
                     loginUser(connection);
                     break;
                 case "2":
                     createUser(connection);
                     break;
+                case "3":
+                    exit(1);
+                    break;
                 default:
-                    System.out.println("Wybierz akcję:\n 1 - Logowanie,\n 2 - Dodaj użytkownika");
+                    System.out.println("wybierz akcję: 1 - logowanie \n, 2 - dodaj użytkownika \n, 3 - zamknij program");
             }
         } else {
             System.out.println("test");
