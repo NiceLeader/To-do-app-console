@@ -1,2 +1,2 @@
-# To-do-appv2
+# To-do-app-console
 Second version of To-do-app , working in console
