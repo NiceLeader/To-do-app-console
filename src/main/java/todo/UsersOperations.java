@@ -1,4 +1,4 @@
-package testarmy;
+package todo;
 
 import java.sql.*;
 import java.util.Scanner;

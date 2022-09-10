@@ -5,6 +5,7 @@
  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
     <persistence-unit name="to_do_appv2">
+        <class>todo.NewEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
                       value="jjdbc:mysql://sql11.freesqldatabase.com/sql11517150" />
