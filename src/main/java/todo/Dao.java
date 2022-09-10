@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Dao {
-    protected static EntityManager entityManager = Persistence.createEntityManagerFactory("hibernate_first_app").createEntityManager();
+    protected static EntityManager entityManager = Persistence.createEntityManagerFactory("to_do_appv2").createEntityManager();
 
     public static <T> void inTransaction(Consumer<T> consumer, T entity) {
         EntityTransaction entityTransaction = entityManager.getTransaction();

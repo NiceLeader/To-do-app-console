@@ -5,10 +5,9 @@
  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
     <persistence-unit name="to_do_appv2">
-        <class>todo.NewEntity</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
-                      value="jjdbc:mysql://sql11.freesqldatabase.com/sql11517150" />
+                      value="jdbc:mysql://sql11.freesqldatabase.com:3306/sql11517150" />
             <property name="javax.persistence.jdbc.user" value="sql11517150" />
             <property name="javax.persistence.jdbc.password" value="vG3TwK9hpD" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
