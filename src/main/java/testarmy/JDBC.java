@@ -52,6 +52,7 @@ public class JDBC {
         pass.setString(1, login);
         pass.execute();
         statement.setString(1, login);
+      //  getUserId(connection,login);
         //        if (BCrypt.checkpw(password, sqlPswd)) {
 //            statement.setString(2, password);
 //           String sqlName = "SELECT name FROM user WHERE login=?;";
@@ -220,6 +221,20 @@ public class JDBC {
             System.out.println("Błąd! Nie usunięto zadania!");
         }
     }
+    private static void deleteUser(Connection connection) throws SQLException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("podaj id użytkownika do skasowania");
+        String id = scanner.nextLine();
+        String sqlDelete = "DELETE FROM user WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete);
+        preparedStatement.setInt(1, Integer.parseInt(id));
+        int i = preparedStatement.executeUpdate();
+        if (i > 0) {
+            System.out.println("usunięto użytkownika");
+        } else {
+            System.out.println("Błąd! Nie usunięto użytkownika!");
+        }
+    }
 
     private static ResultSet searchUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
@@ -229,6 +244,16 @@ public class JDBC {
         PreparedStatement statement = connection.prepareStatement(sqlSearch);
         statement.setInt(1, Integer.parseInt(id));
         ResultSet resultSetSearch = statement.executeQuery();
+        //     System.out.println("imię, nazwisko, login, hasło, email");
+        return resultSetSearch;
+    }
+    private static ResultSet getUserId(Connection connection, String login) throws SQLException {
+        String sqlUserId = "SELECT id FROM user WHERE login=?;";
+        PreparedStatement statementUserId = connection.prepareStatement(sqlUserId);
+        statementUserId.setString(1, login);
+        int idOfUser = Integer.parseInt(sqlUserId);
+        System.out.println("Numer użytkownika: "+idOfUser);
+        ResultSet resultSetSearch = statementUserId.executeQuery();
         //     System.out.println("imię, nazwisko, login, hasło, email");
         return resultSetSearch;
     }
@@ -298,14 +323,14 @@ public class JDBC {
                     System.out.println("wybierz akcję: 1 - logowanie \n, 2 - dodaj użytkownika \n, 3 - zamknij program");
             }
         } else {
-            System.out.println("test");
+            System.out.println("błędna wartość");
         }
 //showAllColumnsFromResultSet(searchAllUsers(connection));
         do {
             System.out.println("Wybierz akcję: \n 1 - Wyszukaj zadanie,\n 2 - Wyszukaj użytkownika,\n 3 - Zmień status zadania,\n 4 - Usuń zadanie,\n 5 - Dodaj zadanie,\n 6 - Zamknij program");
             Scanner scannerAction = new Scanner(System.in);
             String action = scannerAction.nextLine();
-            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")|| action.equals("6")) {
+            if (action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4") || action.equals("5")|| action.equals("6")|| action.equals("7")) {
                 switch (action) {
                     case "1":
                         showAllColumnsFromResultSet(searchTask(connection));
@@ -323,6 +348,9 @@ public class JDBC {
                         addTask(connection);
                         break;
                     case "6":
+                        deleteUser(connection);
+                        break;
+                    case "7":
                         exit(1);
                         break;
                     default:
@@ -331,7 +359,7 @@ public class JDBC {
 
 
             } else {
-                System.out.println("test1");
+                System.out.println("błędna wartość");
             }
         } while (true);
     }

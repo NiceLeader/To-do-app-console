@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class UsersOperations {
+    private static void dd (Connection connection) throws SQLException {}
     private static ResultSet createUser(Connection connection) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj imię");
