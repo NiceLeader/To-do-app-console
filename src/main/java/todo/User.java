@@ -2,12 +2,27 @@ package todo;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+
+    @OneToMany(mappedBy = "user")
+    List<Task> tasks = new ArrayList<>();
+
+    public User(String name, String surname, String login, String password, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+    }
 
     public Long getId() {
         return id;
@@ -17,12 +32,12 @@ public class User {
         return name;
     }
 
-    public User(String name, String surname, String login, String password, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.password = password;
-        this.email = email;
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

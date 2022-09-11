@@ -26,11 +26,23 @@ public class Task {
                 '}';
     }
 
-    public Task(String title, String description, boolean done, String priority) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    private User user;
+
+    public Task(String title, String description, boolean done, String priority, User user) {
         this.title = title;
         this.description = description;
         this.done = done;
         this.priority = priority;
+        this.user = user;
     }
 
     public Long getId() {
